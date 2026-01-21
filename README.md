@@ -1,75 +1,73 @@
 Predictive Maintenance of Aircraft Engines Using LSTM Neural Networks
 
-🚀 Project Overview
-This project implements a deep learning solution for predictive maintenance of aircraft engines, specifically designed for Rolls-Royce Aerospace applications. Using Long Short-Term Memory (LSTM) neural networks, the system predicts the Remaining Useful Life (RUL) of aircraft engines by analyzing sensor data patterns and operational parameters over time.
-🎯 Objective
-The primary goal is to develop an intelligent predictive maintenance system that can:
 
-Accurately predict the remaining useful life of aircraft engines before failure occurs
-Reduce unplanned downtime by enabling proactive maintenance scheduling
-Optimize maintenance costs through data-driven decision making
-Enhance safety by identifying potential failures before they become critical
-Improve operational efficiency across the aerospace fleet
+✈️ Deep Learning Approach for Remaining Useful Life (RUL) Prediction
 
-🔧 Key Features
 
-Time-Series Analysis: Processes sequential sensor data from multiple engine components
-Multi-Sensor Integration: Utilizes data from temperature sensors, pressure gauges, vibration monitors, and more
-LSTM Architecture: Leverages recurrent neural networks to capture long-term dependencies in engine degradation patterns
-Real-Time Prediction: Provides continuous RUL estimates based on current operational data
-Anomaly Detection: Identifies unusual patterns that may indicate impending failures
-Visualization Dashboard: Interactive plots for monitoring engine health and prediction confidence
+📖 Project Overview
+This repository contains a deep learning solution for Predictive Maintenance in the aerospace industry, specifically targeting Rolls-Royce aircraft engines. By leveraging Long Short-Term Memory (LSTM) neural networks, this project predicts the Remaining Useful Life (RUL) of engines based on time-series sensor data.
+
+Predictive maintenance is critical in aviation to prevent failures, optimize maintenance schedules, and reduce operational costs. This project demonstrates how time-series forecasting can proactively identify when an engine unit is approaching failure.
 
 📊 Dataset
-The system works with NASA's Turbofan Engine Degradation Simulation Dataset (C-MAPSS) or similar aerospace sensor data containing:
+The model utilizes multivariate time-series data from aircraft gas turbine engines. The dataset includes:
 
-Operational settings: Flight conditions, altitude, throttle resolver angle
-Sensor measurements: 21+ sensor readings including temperatures, pressures, and speeds
-Run-to-failure sequences: Complete engine lifecycle data from healthy to failure states
+Operational Settings: 3 distinct operational settings that influence engine performance.
 
-🏗️ Technical Architecture
+Sensor Measurements: 21 sensor readings (e.g., Temperature, Pressure, Fan Speed) recording the state of the engine during each flight cycle.
 
-Data Preprocessing Pipeline
+Time Cycles: The progression of engine life measured in cycles.
 
-Normalization and standardization
-Sequence windowing for time-series data
-Feature engineering and selection
+🧠 Methodology
+The core of this project is a Sequential Deep Learning Model built using Keras/TensorFlow. The architecture is designed to capture temporal dependencies in sensor data:
 
+Input Layer: Accepts sequences of sensor data (sliding window approach).
 
-LSTM Network
+LSTM Layers: Two stacked LSTM layers (64 units and 32 units) to learn long-term dependencies and degradation patterns over time.
 
-Multi-layer LSTM architecture
-Dropout layers for regularization
-Dense output layer for RUL prediction
+Dropout Regularization: Applied after LSTM layers to prevent overfitting.
 
+Dense Output Layer: A single neuron regression output to predict the exact RUL value.
 
-Training & Validation
-
-Train-test split with temporal considerations
-Early stopping and model checkpointing
-Hyperparameter optimization
-
-
-Evaluation Metrics
-
-Root Mean Square Error (RMSE)
-Mean Absolute Error (MAE)
-Score function (asymmetric penalty for early vs. late predictions)
-
-
-
-🛠️ Technologies Used
-
-Python 3.8+
-TensorFlow/Keras: Deep learning framework
-NumPy & Pandas: Data manipulation
-Scikit-learn: Preprocessing and metrics
-Matplotlib & Seaborn: Visualization
-Jupyter Notebook: Development environment
-
+🛠️ Model Architecture
+Python
+Model: "sequential"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ lstm (LSTM)                 (None, 30, 64)            22,784    
+ dropout (Dropout)           (None, 30, 64)            0         
+ lstm_1 (LSTM)               (None, 32)                12,416    
+ dropout_1 (Dropout)         (None, 32)                0         
+ dense (Dense)               (None, 1)                 33        
+=================================================================
+Total params: 35,233
+Trainable params: 35,233
 📈 Results & Performance
+The model was trained over 30 epochs, achieving strong convergence on the validation set.
 
-Achieved RUL prediction accuracy within acceptable aerospace industry standards
-Significantly reduced false negatives for critical failure predictions
-Improved maintenance scheduling efficiency by X%
-Demonstrated robust performance across different engine operating conditions
+Final Evaluation Metrics:
+
+RMSE (Root Mean Squared Error): 19.88
+
+MAE (Mean Absolute Error): 13.83
+
+These metrics indicate the model's average prediction error in terms of engine cycles, demonstrating a high degree of accuracy for maintenance planning.
+
+📉 Visualizations
+The notebook includes detailed visualizations to interpret model performance:
+
+RUL Prediction vs. True RUL: Line plots comparing predicted degradation paths against actual values.
+
+Prediction Accuracy Scatter Plot: A direct correlation plot showing how closely predictions align with ground truth (Perfect Prediction line).
+
+Error Distribution: Histogram of prediction errors to analyze model bias and variance.
+
+💻 Technologies Used
+Python 3.x
+
+TensorFlow / Keras: For building and training the LSTM model.
+
+Pandas & NumPy: For data manipulation and sequence generation.
+
+Matplotlib / Seaborn: For plotting training history and prediction results.
